@@ -18,6 +18,7 @@ file_downloads = (
         "SELECT * FROM `bigquery-public-data.pypi.file_downloads` WHERE project = 'iceberg-mcp-server' AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)",
     )
     .option("viewsEnabled", "true")
+    .option("parentProject", "dragonejt")
     .option("materializationProject", "dragonejt")
     .option("materializationDataset", "databricks")
     .load()
