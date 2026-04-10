@@ -1,0 +1,74 @@
+# This is a Databricks asset bundle definition for iceberg-mcp-data.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: iceberg-mcp-data
+  uuid: 9099ad7e-4cd1-4cb8-9721-472050e035d4
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+variables:
+  catalog:
+    description: The catalog to use
+  schema:
+    description: The schema to use
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-ff3bb0b5-7ab2.cloud.databricks.com
+    variables:
+      catalog: workspace
+      schema: ${workspace.current_user.short_name}
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-ff3bb0b5-7ab2.cloud.databricks.com
+      # We explicitly deploy to /Workspace/Users/acc0eda5-a4c2-41c7-9299-599f602207cfa to make sure we only have a single copy.
+      root_path: /Workspace/Users/acc0eda5-a4c2-41c7-9299-599f602207cf/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: workspace
+      schema: default
+    permissions:
+      - group_name: admins
+        level: CAN_MANAGE
+      - service_principal_name: acc0eda5-a4c2-41c7-9299-599f602207cf
+        level: CAN_MANAGE
+    resources:
+      jobs:
+        iceberg-mcp-ingestion:
+          name: iceberg-mcp-ingestion
+
+          trigger:
+            periodic:
+              interval: 1
+              unit: DAYS
+
+          parameters:
+            - name: catalog
+              default: ${var.catalog}
+            - name: schema
+              default: ${var.schema}
+
+          tasks:
+            - task_key: ingest_pypi_data
+              spark_python_task:
+                python_file: ../src/iceberg_mcp_data/transformations/ingest_pypi_data.py
+
+            - task_key: refresh_pipeline
+              depends_on:
+                - task_key: ingest_pypi_data
+              pipeline_task:
+                pipeline_id: ${resources.pipelines.iceberg-mcp-data.id}
+
+          environments:
+            - environment_key: default
+              spec:
+                environment_version: "5"

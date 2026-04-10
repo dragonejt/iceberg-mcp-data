@@ -1,0 +1,20 @@
+# The main pipeline for iceberg-mcp-data
+
+resources:
+  pipelines:
+    iceberg-mcp-data:
+      name: iceberg-mcp-data
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      root_path: "../src/iceberg_mcp_data"
+
+      libraries:
+        - glob:
+            include: ../src/iceberg_mcp_data/transformations/**
+
+      environment:
+        dependencies:
+          # We include every dependency defined by pyproject.toml by defining an editable environment
+          # that points to the folder where pyproject.toml is deployed.
+          - --editable ${workspace.file_path}

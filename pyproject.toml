@@ -1,0 +1,30 @@
+[project]
+name = "iceberg-mcp-data"
+version = "0.0.1"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    # Any dependencies for jobs and pipelines in this project can be added here
+    # See also https://docs.databricks.com/dev-tools/bundles/library-dependencies
+    #
+    # LIMITATION: for pipelines, dependencies are cached during development;
+    # add dependencies to the 'environment' section of your pipeline.yml file instead
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+    "databricks-dlt",
+    "databricks-connect",
+    "ipykernel",
+]
+
+[project.scripts]
+main = "iceberg-mcp-data.main:main"
+
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 120
