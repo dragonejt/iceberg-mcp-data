@@ -1,13 +1,18 @@
-import sys
+from sys import argv
+from base64 import b64encode
 from databricks.sdk.runtime import spark, dbutils
 
-catalog = sys.argv[1]
-schema = sys.argv[2]
+catalog = argv[1]
+schema = argv[2]
 
 credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
+credentials = b64encode(credentials.encode()).decode()
 
 query = """
-SELECT * FROM `bigquery-public-data.pypi.file_downloads` WHERE project = "iceberg-mcp-server" AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+SELECT *
+FROM `bigquery-public-data.pypi.file_downloads`
+WHERE project = "iceberg-mcp-server"
+AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
 """
 
 file_downloads = (
