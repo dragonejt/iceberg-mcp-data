@@ -7,19 +7,16 @@ schema = sys.argv[2]
 credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
 
 query = """
-SELECT *
-FROM `bigquery-public-data.pypi.file_downloads`
-WHERE project = "iceberg-mcp-server"
-AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+SELECT * FROM `bigquery-public-data.pypi.file_downloads` WHERE project = "iceberg-mcp-server" AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
 """
 
 file_downloads = (
     spark.read.format("bigquery")
     .option("credentials", credentials)
-    .option("query", query)
-    .option("dataset", "pypi")
-    .option("project", "bigquery-public-data")
-    .option("viewsEnabled", "true")
+    .option(
+        "query",
+        "SELECT * FROM `bigquery-public-data.pypi.file_downloads` WHERE project = 'iceberg-mcp-server' AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)",
+    )
     .load()
 )
 
