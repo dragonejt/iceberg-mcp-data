@@ -1,11 +1,19 @@
 import sys
-from pyspark.sql import functions as F
-from databricks.sdk.runtime import spark
+from databricks.sdk.runtime import spark, dbutils
 
 catalog = sys.argv[1]
 schema = sys.argv[2]
 
-file_downloads = spark.read.table("bigquery.pypi.file_downloads")
+credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
+
+query = """
+SELECT *
+FROM `bigquery-public-data.pypi.file_downloads`
+WHERE project = "iceberg-mcp-server"
+AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+"""
+
+file_downloads = spark.read.format("bigquery").option("credentials", credentials).option("query", query).load()
 
 table = f"{catalog}.{schema}.pypi_file_downloads"
 

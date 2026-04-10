@@ -17,6 +17,7 @@ dev = [
     "databricks-dlt",
     "databricks-connect",
     "ipykernel",
+    "ty",
 ]
 
 [project.scripts]
