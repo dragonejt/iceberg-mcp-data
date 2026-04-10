@@ -62,6 +62,9 @@ targets:
               environment_key: default
               spark_python_task:
                 python_file: src/iceberg_mcp_data/extractions/ingest_pypi_data.py
+                parameters:
+                  - "{{job.parameters.catalog}}"
+                  - "{{job.parameters.schema}}"
 
             - task_key: refresh_pipeline
               depends_on:

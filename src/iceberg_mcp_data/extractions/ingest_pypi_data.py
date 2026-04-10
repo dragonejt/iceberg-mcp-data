@@ -1,16 +1,11 @@
-from datetime import datetime, timezone, timedelta
+import sys
 from pyspark.sql import functions as F
-from databricks.sdk.runtime import spark, dbutils
+from databricks.sdk.runtime import spark
 
-catalog = dbutils.widgets.get("catalog")
-schema = dbutils.widgets.get("schema")
-
-previous_day = (datetime.now(timezone.utc) - timedelta(days=1)).date()
+catalog = sys.argv[1]
+schema = sys.argv[2]
 
 file_downloads = spark.read.table("bigquery.pypi.file_downloads")
-file_downloads = file_downloads.filter(
-    (F.col("timestamp") >= F.lit(previous_day)) & (F.col("timestamp") < F.lit(previous_day + timedelta(days=1)))
-)
 
 table = f"{catalog}.{schema}.pypi_file_downloads"
 
