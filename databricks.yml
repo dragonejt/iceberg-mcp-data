@@ -31,7 +31,7 @@ targets:
     mode: production
     workspace:
       host: https://dbc-ff3bb0b5-7ab2.cloud.databricks.com
-      # We explicitly deploy to /Workspace/Users/acc0eda5-a4c2-41c7-9299-599f602207cfa to make sure we only have a single copy.
+      # We explicitly deploy to /Workspace/Users/acc0eda5-a4c2-41c7-9299-599f602207cf to make sure we only have a single copy.
       root_path: /Workspace/Users/acc0eda5-a4c2-41c7-9299-599f602207cf/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: workspace
