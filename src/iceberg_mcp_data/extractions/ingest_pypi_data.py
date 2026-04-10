@@ -13,7 +13,15 @@ WHERE project = "iceberg-mcp-server"
 AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
 """
 
-file_downloads = spark.read.format("bigquery").option("credentials", credentials).option("query", query).load()
+file_downloads = (
+    spark.read.format("bigquery")
+    .option("credentials", credentials)
+    .option("query", query)
+    .option("dataset", "pypi")
+    .option("project", "bigquery-public-data")
+    .option("viewsEnabled", "true")
+    .load()
+)
 
 table = f"{catalog}.{schema}.pypi_file_downloads"
 
