@@ -8,3 +8,5 @@ def real_downloads():
     df = spark.read.table("workspace.default.pypi_file_downloads")
     df = df.filter(F.col("details.installer.name").isin("pip", "uv"))
     df = df.dropDuplicates()
+
+    return df
