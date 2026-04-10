@@ -60,7 +60,7 @@ targets:
           tasks:
             - task_key: ingest_pypi_data
               spark_python_task:
-                python_file: ../src/iceberg_mcp_data/extractions/ingest_pypi_data.py
+                python_file: src/iceberg_mcp_data/extractions/ingest_pypi_data.py
 
             - task_key: refresh_pipeline
               depends_on:
