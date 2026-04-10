@@ -37,10 +37,10 @@ targets:
       catalog: workspace
       schema: default
     permissions:
-      - group_name: admins
-        level: CAN_MANAGE
       - service_principal_name: acc0eda5-a4c2-41c7-9299-599f602207cf
         level: CAN_MANAGE
+      - group_name: users
+        level: CAN_VIEW
     resources:
       jobs:
         iceberg-mcp-ingestion:
