@@ -30,4 +30,10 @@ table = "workspace.default.file_downloads"
 if spark.catalog.tableExists(table):
     file_downloads.writeTo(table).append()
 else:
-    file_downloads.writeTo(table).using("iceberg").create()
+    (
+        file_downloads.writeTo(table)
+        .tableProperty("delta.columnMapping.mode", "id")
+        .tableProperty("delta.enableIcebergCompatV2", "true")
+        .tableProperty("delta.universalFormat.enabledFormats", "iceberg")
+        .create()
+    )
