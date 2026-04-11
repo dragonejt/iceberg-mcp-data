@@ -34,4 +34,4 @@ table = f"{catalog}.{schema}.pypi_file_downloads"
 if spark.catalog.tableExists(table):
     file_downloads.writeTo(table).append()
 else:
-    file_downloads.writeTo(table).using("delta").create()
+    file_downloads.writeTo(table).using("iceberg").create()
