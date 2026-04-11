@@ -1,9 +1,5 @@
-from sys import argv
 from base64 import b64encode
 from databricks.sdk.runtime import spark, dbutils
-
-catalog = argv[1]
-schema = argv[2]
 
 credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
 credentials = b64encode(credentials.encode()).decode()
@@ -29,7 +25,7 @@ file_downloads = (
     .load()
 )
 
-table = f"{catalog}.{schema}.pypi_file_downloads"
+table = "workspace.default.file_downloads"
 
 if spark.catalog.tableExists(table):
     file_downloads.writeTo(table).append()

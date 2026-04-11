@@ -58,17 +58,14 @@ targets:
               default: ${var.schema}
 
           tasks:
-            - task_key: ingest_pypi_data
+            - task_key: ingest_file_downloads
               environment_key: default
               spark_python_task:
-                python_file: src/iceberg_mcp_data/ingestions/ingest_pypi_data.py
-                parameters:
-                  - "{{job.parameters.catalog}}"
-                  - "{{job.parameters.schema}}"
+                python_file: src/iceberg_mcp_data/ingestions/file_downloads.py
 
             - task_key: refresh_pipeline
               depends_on:
-                - task_key: ingest_pypi_data
+                - task_key: ingest_file_downloads
               pipeline_task:
                 pipeline_id: ${resources.pipelines.iceberg-mcp-data.id}
 
