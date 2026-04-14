@@ -23,15 +23,21 @@ Local development with iceberg-mcp-data is done using the [Databricks Extension 
 
 ### Testing
 
-Testing involved both validating the built Declarative Automation Bundle and running PySpark unit tests.
+Testing involves both validating the built Declarative Automation Bundle and running PySpark unit tests.
+
+### Unit Tests
+
+This repository uses pytest for test running, although the tests themselves are structured in the unittest format. Running tests involves invoking pytest like any other project. If you use VS Code or a fork for development, the [VS Code Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) will enable automatic test discovery and running in the Testing sidebar.
+
+### Bundle Validation
+
+Databricks Declarative Automation Bundles can be validated before they are deployed to ensure that the deployment and resource creation will succeed.
 
 1. With this project opened in VS Code, go to the Databricks sidebar.
 
 2. Under Bundle Resource Explorer, click on the third button on the `[dev username] iceberg-mcp-data` pipeline labeled "Deploy the bundle and validate the pipeline".
 
 3. This will build and upload the project's [Declarative Automation Bundle](https://docs.databricks.com/aws/en/dev-tools/bundles/), and then run it on the Databricks platform.
-
-If you use VS Code or a fork for development, the [VS Code Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) will enable automatic test discovery and running in the Testing sidebar.
 
 ### Linting and Formatting
 
