@@ -157,6 +157,18 @@ wheels = [
 ]
 
 [[package]]
+name = "databricks-dlt"
+version = "0.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "databricks-connect" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/88/ff/8ba06d337f78e43ad15830edb27b8d4b92a533403d147f98280e932f99a3/databricks-dlt-0.3.0.tar.gz", hash = "sha256:c755ac015e87095c5a67710bf82e870e6de76130bb2a962046ae913f21af03cc", size = 11084, upload-time = "2024-11-27T00:22:51.743Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dd/16/260f89a35b6f08ada9bd4a6b6e1dabdc3c4034ebceddae5c9e1f146a0167/databricks_dlt-0.3.0-py3-none-any.whl", hash = "sha256:232f97e0fc93bae7bbc100f17880fd88c2777c92cbf002e5b5e7810572df2c4a", size = 11171, upload-time = "2024-11-27T00:22:50.198Z" },
+]
+
+[[package]]
 name = "databricks-sdk"
 version = "0.102.0"
 source = { registry = "https://pypi.org/simple" }
@@ -269,6 +281,7 @@ source = { editable = "." }
 [package.dev-dependencies]
 dev = [
     { name = "databricks-connect" },
+    { name = "databricks-dlt" },
     { name = "ipykernel" },
     { name = "pytest" },
     { name = "ruff" },
@@ -280,6 +293,7 @@ dev = [
 [package.metadata.requires-dev]
 dev = [
     { name = "databricks-connect", specifier = "==18.0.*" },
+    { name = "databricks-dlt" },
     { name = "ipykernel" },
     { name = "pytest" },
     { name = "ruff" },

@@ -17,6 +17,7 @@ dev = [
     "databricks-connect==18.0.*",
     "ipykernel",
     "ty",
+    "databricks-dlt",
 ]
 
 [build-system]
@@ -25,3 +26,14 @@ build-backend = "uv_build"
 
 [tool.ruff]
 line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "PL",  # pylint
+    "I",   # isort
+    "C90", # mccabe
+]
