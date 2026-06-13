@@ -12,6 +12,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "ipykernel",
     "ruff",
     "ty",
 ]
