@@ -38,7 +38,7 @@ jobs:
         SNOWFLAKE_SCHEMA: DEV
 
     - name: Setup Environment
-      run: uv sync
+      run: uv sync --python 3.12
 
     - name: Run Tests
       run: uv run pytest --junitxml=junit.xml --cov . --cov-report xml:coverage.xml
