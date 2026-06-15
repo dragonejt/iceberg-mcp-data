@@ -34,8 +34,9 @@ jobs:
       with:
         use-oidc: true
 
-    - name: Setup Snowflake Connection File
+    - name: Setup Snowflake Testing Environment
       run: |
+        echo UV_PYTHON="3.12" > $GITHUB_ENV
         mkdir -p ~/.snowflake
         cat > ~/.snowflake/connections.toml <<EOF
         [default]
@@ -48,9 +49,6 @@ jobs:
         schema = "DEV"
         role = "ICEBERG_MCP_DATA"
         EOF
-
-    - name: Pin Python Version
-      run: echo UV_PYTHON="3.12" > $GITHUB_ENV
 
     - name: Run Tests
       run: uv run pytest --junitxml=junit.xml --cov . --cov-report xml:coverage.xml
