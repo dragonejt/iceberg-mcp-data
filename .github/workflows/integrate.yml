@@ -37,12 +37,14 @@ jobs:
         SNOWFLAKE_DATABASE: DEFAULT
         SNOWFLAKE_SCHEMA: DEV
 
+    - name: Setup Environment
+      run: uv sync
+
     - name: Run Tests
       run: uv run pytest --junitxml=junit.xml --cov . --cov-report xml:coverage.xml
 
     - name: Lint Project and Formatting
       run: |
-        uv sync
         uv run ruff check
         uv run ruff format --check
         uv run ty check
