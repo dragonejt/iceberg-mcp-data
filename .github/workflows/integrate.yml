@@ -10,6 +10,7 @@ on:
 
 env:
   ENV: testing
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
 
 jobs:
   test:
