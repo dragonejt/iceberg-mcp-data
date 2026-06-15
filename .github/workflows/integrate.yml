@@ -10,7 +10,6 @@ on:
 
 env:
   ENV: testing
-  UV_PYTHON: 3.12
 
 jobs:
   test:
@@ -38,8 +37,8 @@ jobs:
         SNOWFLAKE_DATABASE: DEFAULT
         SNOWFLAKE_SCHEMA: DEV
 
-    - name: Setup Environment
-      run: uv sync
+    - name: Pin Python Version
+      run: echo UV_PYTHON="3.12" > $GITHUB_ENV
 
     - name: Run Tests
       run: uv run pytest --junitxml=junit.xml --cov . --cov-report xml:coverage.xml
