@@ -42,6 +42,7 @@ jobs:
 
     - name: Lint Project and Formatting
       run: |
+        uv sync
         uv run ruff check
         uv run ruff format --check
         uv run ty check
