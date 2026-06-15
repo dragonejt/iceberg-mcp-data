@@ -32,10 +32,21 @@ jobs:
       uses: snowflakedb/snowflake-cli-action@v2.0
       with:
         use-oidc: true
-      env:
-        SNOWFLAKE_WAREHOUSE: COMPUTE_WH
-        SNOWFLAKE_DATABASE: DEFAULT
-        SNOWFLAKE_SCHEMA: DEV
+
+    - name: Setup Snowflake Connection File
+      run: |
+        mkdir -p ~/.snowflake
+        cat > ~/.snowflake/connections.toml <<EOF
+        [default]
+        account = "${SNOWFLAKE_ACCOUNT}"
+        authenticator = "${SNOWFLAKE_AUTHENTICATOR}"
+        workload_identity_provider = "${SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER}"
+        token = "${SNOWFLAKE_TOKEN}"
+        warehouse = "COMPUTE_WH"
+        database = "DEFAULT"
+        schema = "DEV"
+        role = "ICEBERG_MCP_DATA"
+        EOF
 
     - name: Pin Python Version
       run: echo UV_PYTHON="3.12" > $GITHUB_ENV
