@@ -41,4 +41,7 @@ select = [
     "C90", # mccabe
 ]
 
-
+[tool.coverage.run]
+omit = [
+    "tests/*",
+]
