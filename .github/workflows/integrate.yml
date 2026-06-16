@@ -51,7 +51,7 @@ jobs:
         EOF
 
     - name: Run Tests
-      run: uv run pytest --cov . --cov-report xml:coverage.xml
+      run: uv run pytest --cov src --cov-report xml:coverage.xml
 
     - name: Lint Project and Formatting
       run: |
