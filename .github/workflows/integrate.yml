@@ -51,7 +51,7 @@ jobs:
         EOF
 
     - name: Run Tests
-      run: uv run pytest --junitxml=junit.xml --cov . --cov-report xml:coverage.xml
+      run: uv run pytest --cov . --cov-report xml:coverage.xml
 
     - name: Lint Project and Formatting
       run: |
@@ -63,6 +63,7 @@ jobs:
       uses: codacy/codacy-coverage-reporter-action@v1.3.0
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: coverage.xml
 
   analyze:
     runs-on: ubuntu-latest
