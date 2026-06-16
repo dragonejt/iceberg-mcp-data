@@ -37,6 +37,7 @@ jobs:
     - name: Setup Snowflake Testing Environment
       run: |
         echo UV_PYTHON="3.12" > $GITHUB_ENV
+        uv sync
         mkdir -p ~/.snowflake
         cat > ~/.snowflake/connections.toml <<EOF
         [default]
@@ -59,10 +60,10 @@ jobs:
         uv run ruff format --check
         uv run ty check
 
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v8.2.0
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Upload Coverage to Codacy
+      uses: codacy/codacy-coverage-reporter-action@v1.3.0
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
   analyze:
     runs-on: ubuntu-latest
