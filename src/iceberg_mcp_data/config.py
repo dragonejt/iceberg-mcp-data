@@ -4,6 +4,6 @@ from cyclopts import Parameter
 
 
 @Parameter("*")
-@dataclass
+@dataclass(frozen=True)
 class PipelineConfig:
     debug: bool = False

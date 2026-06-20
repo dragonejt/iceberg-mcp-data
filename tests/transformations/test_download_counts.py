@@ -9,7 +9,7 @@ class TestDownloadCounts(SparkTestCase):
     spark: SparkSession
 
     def setUp(self) -> None:
-        self.config = PipelineConfig(False)
+        self.config = PipelineConfig(debug=True)
 
     def test_successful_download_counts(self) -> None:
         df = download_counts(self.spark, self.config)

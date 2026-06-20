@@ -9,7 +9,7 @@ class TestRealDownloads(SparkTestCase):
     spark: SparkSession
 
     def setUp(self):
-        self.config = PipelineConfig(False)
+        self.config = PipelineConfig(debug=True)
 
     def test_successful_real_downloads(self) -> None:
         df = real_downloads(self.spark, self.config)
