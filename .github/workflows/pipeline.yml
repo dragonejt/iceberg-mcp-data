@@ -10,7 +10,7 @@ env:
   SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
 
 jobs:
-  test:
+  pipeline:
     runs-on: ubuntu-latest
 
     permissions:
