@@ -47,5 +47,5 @@ jobs:
         role = "ICEBERG_MCP_DATA"
         EOF
 
-    - name: Run Data Pipeline
+    - name: Orchestrate Data Pipeline
       run: uv run pipeline

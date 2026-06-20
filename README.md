@@ -2,6 +2,8 @@
 [![codacy](https://app.codacy.com/project/badge/Grade/f376a00b8a334c118d2f5205aa052c72)](https://app.codacy.com/gh/dragonejt/iceberg-mcp-data/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![coverage](https://app.codacy.com/project/badge/Coverage/f376a00b8a334c118d2f5205aa052c72)](https://app.codacy.com/gh/dragonejt/iceberg-mcp-data/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![integrate](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/integrate.yml/badge.svg)](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/integrate.yml)
+[![pipeline](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/pipeline.yml/badge.svg)](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/pipeline.yml)
+
 ## Pipeline Overview
 
 iceberg-mcp-data is a data pipeline that ingests PyPI file downloads and distribution metadata for [iceberg-mcp-server](https://github.com/dragonejt/iceberg-mcp-server), and then performs ETL and data processing on it. This data pipeline consists of the following components:
@@ -20,7 +22,7 @@ Local development with iceberg-mcp-data is done using the [Snowflake Extension f
 
 2. Run the `pipeline` command to run the entire data pipeline on Snowpark Connect for Apache Spark using your Snowflake connection. This will run all transformation jobs in order.
 
-3. Run the `pipeline run-job <job name>` to run a specific job.
+3. Run the `pipeline <transform-name>` to run a specific transformation.
 
 ### Testing
 
@@ -38,4 +40,4 @@ The Ruff configuration is found in `pyproject.toml`, and all autofixable issues 
 
 ## Orchestration
 
-In production, daily GitHub Actions workflows run to orchestrate the entire data pipeline.
+In production, pipeline workflow runs daily to orchestrate the data pipeline. The workflow can also be started manually for manual testing. Production data is written into `DEFAULT.PUBLIC`.
