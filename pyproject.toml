@@ -7,7 +7,11 @@ license = "MPL-2.0"
 requires-python = ">=3.12"
 dependencies = [
     "cyclopts",
+    "opentelemetry-api",
+    "opentelemetry-exporter-otlp",
+    "opentelemetry-sdk",
     "pyspark<4.0.0",
+    "snowflake-telemetry-python",
     "snowpark-connect[iceberg]",
 ]
 
@@ -21,7 +25,7 @@ dev = [
 ]
 
 [project.scripts]
-pipeline = "iceberg_mcp_data.pipeline:app"
+pipeline = "iceberg_mcp_data.pipeline:pipeline"
 
 [build-system]
 requires = ["uv_build"]

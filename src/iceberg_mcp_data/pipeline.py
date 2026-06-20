@@ -1,39 +1,58 @@
-from enum import Enum
+from collections.abc import Generator
+from contextlib import contextmanager
 
 from cyclopts import App
+from pyspark.sql.connect.session import SparkSession
 from snowflake.snowpark_connect import init_spark_session
 
 from iceberg_mcp_data.config import PipelineConfig
 from iceberg_mcp_data.transformations.download_counts import download_counts
-
-app = App()
-
-
-class JobName(Enum):
-    download_counts = "download_counts"
+from iceberg_mcp_data.transformations.real_downloads import real_downloads
 
 
-@app.default
-def run_pipeline(config: PipelineConfig = PipelineConfig()):
-    spark = init_spark_session()
-    spark.conf.set("snowpark.connect.iceberg.external_volume", "SNOWFLAKE_MANAGED")
+class IcebergMCPDataPipeline:
+    app: App
 
-    download_counts(spark, config).writeTo("DOWNLOAD_COUNTS").using("iceberg").createOrReplace()
+    def __init__(self) -> None:
+        self.app = App()
+        self.app.default(self.run_pipeline)
+        self.app.command(self.download_counts)
+        self.app.command(self.real_downloads)
 
-    spark.stop()
+    @contextmanager
+    def spark_session(self) -> Generator[SparkSession]:
+        spark = init_spark_session()
+        spark.conf.set(
+            "snowpark.connect.iceberg.external_volume",
+            "SNOWFLAKE_MANAGED",
+        )
+        try:
+            yield spark
+        finally:
+            spark.stop()
 
+    def run_pipeline(self, config: PipelineConfig = PipelineConfig()) -> None:
+        """Run the Iceberg MCP Data Pipeline"""
 
-@app.command
-def run_job(job: JobName, config: PipelineConfig = PipelineConfig()):
-    spark = init_spark_session()
-    spark.conf.set("snowpark.connect.iceberg.external_volume", "SNOWFLAKE_MANAGED")
+        with self.spark_session() as spark:
+            download_counts(spark, config).writeTo("DOWNLOAD_COUNTS").using("iceberg").createOrReplace()
+            real_downloads(spark, config).writeTo("REAL_DOWNLOADS").using("iceberg").createOrReplace()
 
-    match job:
-        case JobName.download_counts:
+    def download_counts(self, config: PipelineConfig = PipelineConfig()) -> None:
+        """Run the download_counts transformation"""
+
+        with self.spark_session() as spark:
             download_counts(spark, config).writeTo("DOWNLOAD_COUNTS").using("iceberg").createOrReplace()
 
-    spark.stop()
+    def real_downloads(self, config: PipelineConfig = PipelineConfig()) -> None:
+        """Run the real_downloads transformation"""
+
+        with self.spark_session() as spark:
+            real_downloads(spark, config).writeTo("REAL_DOWNLOADS").using("iceberg").createOrReplace()
+
+
+pipeline = IcebergMCPDataPipeline().app
 
 
 if __name__ == "__main__":
-    app()
+    pipeline()
