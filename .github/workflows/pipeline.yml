@@ -1,0 +1,51 @@
+name: pipeline
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+env:
+  ENV: production
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+
+    - name: Setup uv and Python
+      uses: astral-sh/setup-uv@v8.2.0
+      with:
+        version: latest
+
+    - name: Setup Snowflake CLI
+      uses: snowflakedb/snowflake-cli-action@v2.0
+      with:
+        use-oidc: true
+
+    - name: Setup Snowflake Connection
+      run: |
+        echo UV_PYTHON="3.12" > $GITHUB_ENV
+        mkdir -p ~/.snowflake
+        cat > ~/.snowflake/connections.toml <<EOF
+        [default]
+        account = "${SNOWFLAKE_ACCOUNT}"
+        authenticator = "${SNOWFLAKE_AUTHENTICATOR}"
+        workload_identity_provider = "${SNOWFLAKE_WORKLOAD_IDENTITY_PROVIDER}"
+        token = "${SNOWFLAKE_TOKEN}"
+        warehouse = "COMPUTE_WH"
+        database = "DEFAULT"
+        schema = "PUBLIC"
+        role = "ICEBERG_MCP_DATA"
+        EOF
+
+    - name: Run Data Pipeline
+      run: uv run pipeline

@@ -34,7 +34,7 @@ jobs:
       with:
         use-oidc: true
 
-    - name: Setup Snowflake Testing Environment
+    - name: Setup Snowflake Connection
       run: |
         echo UV_PYTHON="3.12" > $GITHUB_ENV
         mkdir -p ~/.snowflake
