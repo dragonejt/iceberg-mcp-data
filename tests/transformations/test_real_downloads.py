@@ -8,7 +8,7 @@ from tests.spark_test_case import SparkTestCase
 class TestRealDownloads(SparkTestCase):
     spark: SparkSession
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.config = PipelineConfig(debug=True)
 
     def test_successful_real_downloads(self) -> None:

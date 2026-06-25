@@ -9,6 +9,8 @@ from iceberg_mcp_data.config import PipelineConfig
 from iceberg_mcp_data.transformations.download_counts import download_counts
 from iceberg_mcp_data.transformations.real_downloads import real_downloads
 
+default_config = PipelineConfig()
+
 
 class IcebergMCPDataPipeline:
     app: App
@@ -31,20 +33,20 @@ class IcebergMCPDataPipeline:
         finally:
             spark.stop()
 
-    def run_pipeline(self, config: PipelineConfig = PipelineConfig()) -> None:
+    def run_pipeline(self, config: PipelineConfig = default_config) -> None:
         """Iceberg MCP Data Pipeline"""
 
         with self.spark_session() as spark:
             download_counts(spark, config)
             real_downloads(spark, config)
 
-    def download_counts(self, config: PipelineConfig = PipelineConfig()) -> None:
+    def download_counts(self, config: PipelineConfig = default_config) -> None:
         """Run the download_counts transformation."""
 
         with self.spark_session() as spark:
             download_counts(spark, config)
 
-    def real_downloads(self, config: PipelineConfig = PipelineConfig()) -> None:
+    def real_downloads(self, config: PipelineConfig = default_config) -> None:
         """Run the real_downloads transformation."""
 
         with self.spark_session() as spark:
