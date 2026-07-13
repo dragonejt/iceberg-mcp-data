@@ -1,5 +1,8 @@
 # iceberg-mcp-data
-[![deploy](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/deliver.yml/badge.svg)](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/deliver.yml)
+[![codacy](https://app.codacy.com/project/badge/Grade/f376a00b8a334c118d2f5205aa052c72)](https://app.codacy.com/gh/dragonejt/iceberg-mcp-data/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![coverage](https://app.codacy.com/project/badge/Coverage/f376a00b8a334c118d2f5205aa052c72)](https://app.codacy.com/gh/dragonejt/iceberg-mcp-data/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+[![integrate](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/integrate.yml/badge.svg)](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/integrate.yml)
+[![deliver](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/deliver.yml/badge.svg)](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/deliver.yml)
 
 ## Pipeline Overview
 

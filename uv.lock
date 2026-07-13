@@ -292,7 +292,7 @@ dev = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "databricks-connect", specifier = "==18.0.*" },
+    { name = "databricks-connect" },
     { name = "databricks-dlt" },
     { name = "ipykernel" },
     { name = "pytest" },
