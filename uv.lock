@@ -317,7 +317,7 @@ dev = [
     { name = "databricks-dlt" },
     { name = "ipykernel" },
     { name = "pytest" },
-    { name = "pytest-cov", specifier = ">=7.1.0" },
+    { name = "pytest-cov" },
     { name = "ruff" },
     { name = "ty" },
 ]

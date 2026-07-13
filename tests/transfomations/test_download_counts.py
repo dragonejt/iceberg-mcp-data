@@ -2,5 +2,5 @@ from unittest import TestCase
 
 
 class TestDownloadCounts(TestCase):
-    def dummy_test(self) -> None:
+    def test_identity(self) -> None:
         self.assertEqual(1, 1)
