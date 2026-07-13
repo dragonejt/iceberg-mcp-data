@@ -18,6 +18,7 @@ dev = [
     "ipykernel",
     "ty",
     "databricks-dlt",
+    "pytest-cov",
 ]
 
 [build-system]
@@ -36,4 +37,9 @@ select = [
     "PL",  # pylint
     "I",   # isort
     "C90", # mccabe
+]
+
+[tool.coverage.run]
+omit = [
+    "tests/*",
 ]
