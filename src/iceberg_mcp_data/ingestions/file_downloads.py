@@ -2,10 +2,7 @@ from base64 import b64encode
 
 from databricks.sdk.runtime import dbutils, spark
 from pyspark.sql import SparkSession
-<<<<<<< HEAD
-=======
 
->>>>>>> e945791 (fix: change ingestion into functions)
 
 def file_downloads(spark: SparkSession, credentials: str) -> None:
     query = """
