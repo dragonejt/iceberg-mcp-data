@@ -62,10 +62,16 @@ targets:
               environment_key: default
               spark_python_task:
                 python_file: src/iceberg_mcp_data/ingestions/file_downloads.py
+            
+            - task_key: ingest_distribution_metadata
+              environment_key: default
+              spark_python_task:
+                python_file: src/iceberg_mcp_data/ingestions/distribution_metadata.py
 
             - task_key: refresh_pipeline
               depends_on:
                 - task_key: ingest_file_downloads
+                - task_key: ingest_distribution_metadata
               pipeline_task:
                 pipeline_id: ${resources.pipelines.iceberg-mcp-data.id}
 

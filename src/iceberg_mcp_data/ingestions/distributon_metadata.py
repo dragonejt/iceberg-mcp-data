@@ -1,20 +1,15 @@
 from base64 import b64encode
-from datetime import datetime, timezone
-from sys import exit
 
 from databricks.sdk.runtime import dbutils, spark
-
-if datetime.now(timezone.utc).day != 1:
-    exit()
 
 credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
 credentials = b64encode(credentials.encode()).decode()
 
 query = """
 SELECT *
-FROM `bigquery-public-data.pypi.file_downloads`
-WHERE project = "iceberg-mcp-server"
-AND DATE(timestamp) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+FROM `bigquery-public-data.pypi.distribution_metadata`
+WHERE name = 'iceberg-mcp-server'
+AND DATE_TRUNC(DATE(upload_time), MONTH) = DATE_TRUNC(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH), MONTH)
 """
 
 file_downloads = (
@@ -28,7 +23,7 @@ file_downloads = (
     .load()
 )
 
-table = "workspace.default.file_downloads"
+table = "workspace.default.distribution_metadata"
 
 if spark.catalog.tableExists(table):
     file_downloads.writeTo(table).append()
