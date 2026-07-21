@@ -2,12 +2,12 @@ from base64 import b64encode
 
 from databricks.sdk.runtime import dbutils, spark
 from pyspark.sql import SparkSession
+<<<<<<< HEAD
+=======
 
-credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
-credentials = b64encode(credentials.encode()).decode()
+>>>>>>> e945791 (fix: change ingestion into functions)
 
-
-def file_downloads(spark: SparkSession) -> None:
+def file_downloads(spark: SparkSession, credentials: str) -> None:
     query = """
     SELECT *
     FROM `bigquery-public-data.pypi.file_downloads`
@@ -41,4 +41,7 @@ def file_downloads(spark: SparkSession) -> None:
 
 
 if __name__ == "__main__":
-    file_downloads(spark)
+    credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
+    credentials = b64encode(credentials.encode()).decode()
+
+    file_downloads(spark, credentials)

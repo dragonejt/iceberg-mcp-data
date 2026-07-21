@@ -4,11 +4,8 @@ from datetime import datetime, timezone
 from databricks.sdk.runtime import dbutils, spark
 from pyspark.sql import SparkSession
 
-credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
-credentials = b64encode(credentials.encode()).decode()
 
-
-def distribution_metadata(spark: SparkSession) -> None:
+def distribution_metadata(spark: SparkSession, credentials: str) -> None:
     # Only executes on first of each month to get previous month's data
     if datetime.now(timezone.utc).day != 1:
         return
@@ -46,4 +43,7 @@ def distribution_metadata(spark: SparkSession) -> None:
 
 
 if __name__ == "__main__":
-    distribution_metadata(spark)
+    credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
+    credentials = b64encode(credentials.encode()).decode()
+
+    distribution_metadata(spark, credentials)
