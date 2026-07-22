@@ -5,6 +5,7 @@ from pyspark.sql import SparkSession
 
 
 def file_downloads(spark: SparkSession, credentials: str) -> None:
+    table = "workspace.default.file_downloads"
     query = """
     SELECT *
     FROM `bigquery-public-data.pypi.file_downloads`
@@ -22,8 +23,6 @@ def file_downloads(spark: SparkSession, credentials: str) -> None:
         .option("materializationDataset", "databricks")
         .load()
     )
-
-    table = "workspace.default.file_downloads"
 
     if spark.catalog.tableExists(table):
         file_downloads.writeTo(table).append()

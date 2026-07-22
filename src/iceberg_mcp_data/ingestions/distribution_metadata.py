@@ -6,8 +6,10 @@ from pyspark.sql import SparkSession
 
 
 def distribution_metadata(spark: SparkSession, credentials: str) -> None:
+    table = "workspace.default.distribution_metadata"
+
     # Only executes on first of each month to get previous month's data
-    if datetime.now(timezone.utc).day != 1:
+    if spark.catalog.tableExists(table) and datetime.now(timezone.utc).day != 1:
         return
 
     query = """
@@ -27,8 +29,6 @@ def distribution_metadata(spark: SparkSession, credentials: str) -> None:
         .option("materializationDataset", "databricks")
         .load()
     )
-
-    table = "workspace.default.distribution_metadata"
 
     if spark.catalog.tableExists(table):
         file_downloads.writeTo(table).append()
