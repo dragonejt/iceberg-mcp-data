@@ -2,10 +2,9 @@ from base64 import b64encode
 from datetime import datetime, timezone
 
 from databricks.sdk.runtime import dbutils, spark
-from pyspark.sql import SparkSession
 
 
-def distribution_metadata(spark: SparkSession, credentials: str) -> None:
+def distribution_metadata(credentials: str) -> None:
     table = "workspace.default.distribution_metadata"
 
     # Only executes on first of each month to get previous month's data
@@ -46,4 +45,4 @@ if __name__ == "__main__":
     credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
     credentials = b64encode(credentials.encode()).decode()
 
-    distribution_metadata(spark, credentials)
+    distribution_metadata(credentials)

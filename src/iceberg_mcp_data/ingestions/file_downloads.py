@@ -1,10 +1,9 @@
 from base64 import b64encode
 
 from databricks.sdk.runtime import dbutils, spark
-from pyspark.sql import SparkSession
 
 
-def file_downloads(spark: SparkSession, credentials: str) -> None:
+def file_downloads(credentials: str) -> None:
     table = "workspace.default.file_downloads"
     query = """
     SELECT *
@@ -40,4 +39,4 @@ if __name__ == "__main__":
     credentials = dbutils.secrets.get(scope="gcp", key="bigquery")
     credentials = b64encode(credentials.encode()).decode()
 
-    file_downloads(spark, credentials)
+    file_downloads(credentials)
