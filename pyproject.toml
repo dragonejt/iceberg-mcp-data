@@ -14,7 +14,7 @@ dependencies = [
 dev = [
     "pytest",
     "ruff",
-    "databricks-connect",
+    "databricks-connect~=18.0",
     "ipykernel",
     "ty",
     "databricks-dlt",
