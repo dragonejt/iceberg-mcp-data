@@ -4,7 +4,7 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 
-@dp.table
+@dp.materialized_view
 def releases_per_month() -> DataFrame:
     df = spark.read.table("workspace.default.distribution_metadata")
     df = df.groupBy(F.year("upload_time").alias("year"), F.month("upload_time").alias("month"))

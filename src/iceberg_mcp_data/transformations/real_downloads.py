@@ -4,7 +4,7 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 
-@dp.table
+@dp.materialized_view
 def real_downloads() -> DataFrame:
     df = spark.read.table("workspace.default.file_downloads")
     df = df.filter(F.col("details.installer.name").isin("pip", "uv"))
