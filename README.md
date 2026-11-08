@@ -1,6 +1,6 @@
 # iceberg-mcp-data
-[![codacy](https://app.codacy.com/project/badge/Grade/f376a00b8a334c118d2f5205aa052c72)](https://app.codacy.com/gh/dragonejt/iceberg-mcp-data/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-[![coverage](https://app.codacy.com/project/badge/Coverage/f376a00b8a334c118d2f5205aa052c72)](https://app.codacy.com/gh/dragonejt/iceberg-mcp-data/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+[![sonar](https://sonarcloud.io/api/project_badges/measure?project=dragonejt_iceberg-mcp-data&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dragonejt_iceberg-mcp-data)
+[![coverage](https://sonarcloud.io/api/project_badges/measure?project=dragonejt_iceberg-mcp-data&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dragonejt_iceberg-mcp-data)
 [![integrate](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/integrate.yml/badge.svg)](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/integrate.yml)
 [![deliver](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/deliver.yml/badge.svg)](https://github.com/dragonejt/iceberg-mcp-data/actions/workflows/deliver.yml)
 
