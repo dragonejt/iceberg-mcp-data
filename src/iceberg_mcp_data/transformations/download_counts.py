@@ -4,7 +4,14 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 
-@dp.materialized_view
+@dp.materialized_view(
+    table_properties={
+        "delta.columnMapping.mode": "name",
+        "delta.enableRowTracking": "true",
+        "delta.enableIcebergCompatV3": "true",
+        "delta.universalFormat.enabledFormats": "iceberg",
+    }
+)
 @dp.expect("download_count >= 0", F.col("download_count") >= 0)
 def download_counts() -> DataFrame:
     df = spark.read.table("workspace.default.file_downloads")

@@ -8,6 +8,9 @@ resources:
       schema: ${var.schema}
       serverless: true
       root_path: "../src/iceberg_mcp_data"
+      
+      configuration:
+        pipelines.externalMetadata.enabled: "true"
 
       libraries:
         - glob:
